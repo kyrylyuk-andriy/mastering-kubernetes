@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: etcd
+  namespace: kube-system
+spec:
+  containers:
+  - name: etcd
+    image: quay.io/coreos/etcd:v3.5.9
+    command:
+    - /usr/local/bin/etcd
+    - --data-dir=/var/lib/etcd
+    - --listen-client-urls=http://0.0.0.0:2379
+    - --advertise-client-urls=http://127.0.0.1:2379
+    ports:
+    - containerPort: 2379
+      name: client
+    - containerPort: 2380
+      name: peer
+    volumeMounts:
+    - name: etcd-data
+      mountPath: /var/lib/etcd
+  hostNetwork: true
+  volumes:
+  - name: etcd-data
+    hostPath:
+      path: /var/lib/etcd

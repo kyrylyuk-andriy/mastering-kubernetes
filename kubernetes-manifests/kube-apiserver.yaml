@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  hostNetwork: true
+  containers:
+  - name: kube-apiserver
+    image: k8s.gcr.io/kube-apiserver:v1.30.0
+    command:
+      - kube-apiserver
+      - --etcd-servers=http://127.0.0.1:2379
+      - --bind-address=0.0.0.0
+      - --secure-port=6443
+      - --allow-privileged=true
+

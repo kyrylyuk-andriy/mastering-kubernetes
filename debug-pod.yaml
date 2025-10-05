@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug-flame
+  namespace: default
+spec:
+  hostPID: true
+  restartPolicy: Never
+  containers:
+    - name: flame
+      image: verizondigital/kubectl-flame:v0.2.4-perf
+      command: ["sleep", "3600"]
+      securityContext:
+        privileged: true
+        capabilities:
+          add: ["SYS_ADMIN", "SYS_PTRACE"]
+  hostPID: true
+  hostNetwork: true
+      
